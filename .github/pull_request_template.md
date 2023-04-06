@@ -10,7 +10,7 @@ If this is a regression fix, please:
 This allows us to make sure that the regression fix will get cherry-picked into the stable release.
 -->
 
--   [ ] This fixes a regression introduced by: [Regression PR Link] [FAQ]
+-   [ ] This fixes a regression introduced by: [Regression PR Link]
 -   [ ] This is not a regression fix.
 
 ### Description <!-- required -->
