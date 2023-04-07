@@ -2,6 +2,8 @@
 
 ```bash
 pip3 install -r requirements.txt
+brew install gum gh
+gh auth login
 ```
 
 Put this repo in your path
