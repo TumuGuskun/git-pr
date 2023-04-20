@@ -21,5 +21,20 @@ In any github repo
 git pr
 ```
 
-If you have pr template files in your `.github` folder it should find them and use them.
-Currently this fills out checkboxes and any section headed by `Description`.
+It will find any `.md` file in your `.github` folder and use that as a template.
+
+To mark a section as fillable, put a comment after it with `fill=true` in the comment body.
+
+```md
+### Description <!-- fill=true -->
+```
+
+To set the number of checkboxes you want to select in a list of checkboxes put `limit=n` in a comment block before the list.
+
+```md
+<!-- limit=2 -->
+
+-   [ ] [Describe customer-facing change]
+-   [ ] Feature flagged: [exampleFlag]
+-   [ ] No customer-facing change
+```

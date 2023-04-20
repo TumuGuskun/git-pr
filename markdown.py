@@ -83,7 +83,7 @@ def fill_checkboxes(template: Document) -> Document:
 
 
 def get_body_from_template(template: Document) -> str:
-    template = fill_sections(template=template)
     template = fill_checkboxes(template=template)
+    template = fill_sections(template=template)
     pr_body = markdownify(HTMLRenderer().render(template)).replace("*", "-")
     return pr_body
