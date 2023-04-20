@@ -46,13 +46,13 @@ def gum_choose_multiple(
     if message:
         print(message)
 
-    display_choices = [display_function(choice) for choice in choices]
+    display_choices = [display_function(choice).strip() for choice in choices]
 
     gum_command = ShellCommand(shell_command=["gum", "choose"])
     gum_command.add_command_args(*display_choices)
 
     if limit:
-        gum_command.add_key_value_arg(key="--limit", value=str(1))
+        gum_command.add_key_value_arg(key="--limit", value=str(limit))
     else:
         gum_command.add_flag(flag="--no-limit")
 

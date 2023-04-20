@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-import re
 import sys
 import webbrowser
 from typing import Optional
 
 from git.exc import InvalidGitRepositoryError
 from git.repo import Repo
-from markdownify import markdownify
-from mistletoe import Document, HTMLRenderer
 
 from gum import gum_choose, gum_confirm, gum_input
+from markdown import get_body_from_template, get_template_contents
 from shell_command import ShellCommand
 
 
@@ -37,7 +35,7 @@ def get_repo() -> Repo:
         sys.exit(1)
 
 
-def get_template_file(repo: Repo) -> Optional[Document]:
+def get_template_file_path(repo: Repo) -> Optional[str]:
     template_files = repo.git.ls_files(".github/*.md").split()
 
     if len(template_files) == 0:
@@ -48,57 +46,16 @@ def get_template_file(repo: Repo) -> Optional[Document]:
         gum_selection = gum_choose(choices=template_files)
         chosen_template = gum_selection.selection
 
-    with open(f"{repo.git_dir}/../{chosen_template}", "r") as template_file:
-        template = Document.read(template_file.read())
-
-    return template
-
-
-def get_body_from_template(template: Document) -> str:
-    heading = ""
-    for child in template.walk(tokens=["List", "Heading"]):
-        node = child.node
-        if node.name == "List":
-            choices = []
-            for sub_child in node.walk(tokens=["RawText"]):
-                if "[ ]" in (content := sub_child.node.content):
-                    choices.append(content)
-
-            if len(choices) == 1:
-                choice = choices.pop()
-                index = 0
-                if not gum_confirm(message=choice):
-                    choice = None
-            elif choices:
-                gum_selection = gum_choose(choices=choices, message=heading)
-                choice = gum_selection.selection
-                index = gum_selection.index
-            else:
-                choice = None
-                index = None
-
-            if choice:
-                _, words = str(choice).split("[ ] ")
-                if match := re.search(r"\[(.*)\]", words):
-                    reason = gum_input(message=match.group(1))
-                    words = re.sub(r"\[(.*)\]", f"[{reason}]", words)
-                node.children[index].children[0].children[0].content = f"[x] {words}"
-        elif node.name == "Heading":
-            heading = node.children[0].content
-            if "Description" in heading:
-                description = gum_input(message=heading)
-                node.children[0].content += f"\n{description}"
-
-    pr_body = markdownify(HTMLRenderer().render(template)).replace("*", "-")
-    return pr_body
+    return f"{repo.git_dir}/../{chosen_template}"
 
 
 def main():
     repo = get_repo()
 
-    template = get_template_file(repo=repo)
+    template_file_path = get_template_file_path(repo=repo)
     title = gum_input(message="Title: ", default=str(repo.head.commit.message.strip()))
-    if template:
+    if template_file_path:
+        template = get_template_contents(template_file_path=template_file_path)
         pr_body = get_body_from_template(template=template)
     else:
         pr_body = gum_input(

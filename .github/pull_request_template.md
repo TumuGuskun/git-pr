@@ -1,6 +1,6 @@
 <!-- Please start your PR title with one of [regression-fix] / [fix] / [migration] / [feat] / [refactor] / [build] / [docs] / [chore] -->
 
-### Regression Fix <!-- required -->
+### Regression Fix
 
 <!--
 If this is a regression fix, please:
@@ -13,11 +13,11 @@ This allows us to make sure that the regression fix will get cherry-picked into 
 -   [ ] This fixes a regression introduced by: [Regression PR Link]
 -   [ ] This is not a regression fix.
 
-### Description <!-- required -->
+### Description <!-- fill=true -->
 
-### Screenshots <!-- required for visual changes -->
+### Screenshots <!-- for visual changes -->
 
-### Changelog <!-- required -->
+### Changelog
 
 <!--Choose one by changing [ ] to [x] -->
 
@@ -29,23 +29,23 @@ This allows us to make sure that the regression fix will get cherry-picked into 
 Questions: Ping in #changelog
 -->
 
-### Tests <!-- required -->
+### Tests
 
-<!--Choose by changing [ ] to [x] -->
+<!--Choose by changing [ ] to [x] limit=1-->
 
 -   [ ] ✅ [Describe the added or updated test coverage] <!-- e.g. Storybook, unit, integration, Cypress, screenshot. -->
 -   [ ] ❓ I don't know how to test this change <!-- Ping #eng-help for any help on writing tests! -->
 -   [ ] 🟡 I'm choosing not to write tests for this change because: [your reason here] <!-- This should be the exception (e.g. copy changes) -->
 -   [ ] 🔧 This fixes flaky/bad tests as described here: [cause of flaky or bad test] <!-- If the PR fixes tests, you can also put in a linear ticket with the cause -->
 
-### Analytics Instrumentation
+### Analytics Instrumentation <!-- fill=true -->
 
 <!--
 If this PR contains any new analytics events or updates to existing events, please:
 2.  Request a review from the data team (use the Reviewers option on PR and select data team).
 -->
 
-<!--Choose one by changing [ ] to [x] -->
+<!--Choose one by changing [ ] to [x] limit=2 -->
 
 -   [ ] This adds a new analytics event
 -   [ ] This edits an existing analytics event
